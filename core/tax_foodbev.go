@@ -12,7 +12,7 @@ const (
 )
 
 func (t *TaxCategoryFoodNBeverage) Name() string       { return t.name }
-func (t *TaxCategoryFoodNBeverage) IsRefundable() bool { return false }
+func (t *TaxCategoryFoodNBeverage) IsRefundable() bool { return true }
 func (t *TaxCategoryFoodNBeverage) Code() TaxCode      { return TaxCodeFoodNBeverage }
 func (t *TaxCategoryFoodNBeverage) Type() string       { return taxTypeFoodNBeverage }
 func (t *TaxCategoryFoodNBeverage) Price() float64     { return t.price }

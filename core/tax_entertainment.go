@@ -19,10 +19,8 @@ func (t *TaxCategoryEntertainment) Price() float64     { return t.price }
 func (t *TaxCategoryEntertainment) Total() float64     { return t.price + t.Tax() }
 
 func (t *TaxCategoryEntertainment) Tax() float64 {
-	if t.price > 0 && t.price < 100 {
-		return 0
-	} else if t.price >= 100 {
-		return 0.01 + (t.price - 100)
+	if t.price >= 100 {
+		return 0.01 * (t.price - 100)
 	}
 	return 0
 }

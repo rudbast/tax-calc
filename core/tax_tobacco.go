@@ -12,7 +12,7 @@ const (
 )
 
 func (t *TaxCategoryTobacco) Name() string       { return t.name }
-func (t *TaxCategoryTobacco) IsRefundable() bool { return true }
+func (t *TaxCategoryTobacco) IsRefundable() bool { return false }
 func (t *TaxCategoryTobacco) Code() TaxCode      { return TaxCodeTobacco }
 func (t *TaxCategoryTobacco) Type() string       { return taxTypeTobacco }
 func (t *TaxCategoryTobacco) Price() float64     { return t.price }
