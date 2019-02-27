@@ -4,6 +4,6 @@ port = "8088"
 [database]
 username = "root"
 password = "root"
-host     = "localhost"
+host     = "db"
 port     = "5432"
 name     = "tax_calc"
