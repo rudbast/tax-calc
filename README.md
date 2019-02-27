@@ -60,3 +60,9 @@ n/a
 ## Sample request
 
 Postman Collection: [https://www.getpostman.com/collections/28a52c1830b0d19113ed](https://www.getpostman.com/collections/28a52c1830b0d19113ed)
+
+## Database structure
+
+Refer to the `migration` directory [here](https://github.com/rudbast/tax-calc/tree/master/files/data/tax-calc/migration).
+
+Field explanation is provided in `.sql` file in comments form.
