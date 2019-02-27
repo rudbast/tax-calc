@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+    db:
+        image: postgres:11
+        volumes:
+            - db-data:/var/lib/postgresql
+            - ./files/data/tax-calc/migration:/docker-entrypoint-initdb.d/
+        restart: always
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+            POSTGRES_DB: tax_calc
+        ports:
+            - "5432:5432"
+
+    app:
+        build: .
+        command: go run -mod=vendor main.go
+        volumes:
+            - .:/app
+        working_dir: /app
+        ports:
+            - "8088:8088"
+        depends_on:
+             - "db"
+
+volumes:
+    db-data:
