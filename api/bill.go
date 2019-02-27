@@ -4,10 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"net/http"
 
-	"github.com/pkg/errors"
-	"github.com/rudbast/tax-calc/model"
 	"github.com/rudbast/tax-calc/core"
+	"github.com/rudbast/tax-calc/model"
 )
 
 type (
@@ -33,21 +33,29 @@ type (
 	}
 )
 
+func NewBillService(db *sql.DB) *BillService {
+	return &BillService{
+		db: db,
+	}
+}
+
 // Insert one bill detail to database.
-func (b *BillService) InsertOneBill(ctx context.Context, bill model.BillModel) error {
+func (b *BillService) InsertOneBill(ctx context.Context, bill model.BillModel) *Error {
 	_, err := model.InsertOneBill(ctx, b.db, bill)
 	if err != nil {
-		return errors.Wrap(err, "service/bill/insert")
+		return NewErrorWrap(err, "service/bill/insert",
+			"Insert bill error.", http.StatusInternalServerError)
 	}
 
 	return nil
 }
 
 // Get summary of all bills from database.
-func (b *BillService) GetBillsSummary(ctx context.Context) (BillsSummary, error) {
+func (b *BillService) GetBillsSummary(ctx context.Context) (BillsSummary, *Error) {
 	bills, err := model.GetAllBills(ctx, b.db)
 	if err != nil {
-		return BillsSummary{}, errors.Wrap(err, "service/bill/summary")
+		return BillsSummary{}, NewErrorWrap(err, "service/bill/summary",
+			"Query bill data error.", http.StatusInternalServerError)
 	}
 
 	var summary BillsSummary
@@ -59,7 +67,8 @@ func (b *BillService) GetBillsSummary(ctx context.Context) (BillsSummary, error)
 	for _, b := range bills {
 		bill, err := core.New(b.Name, core.TaxCode(b.TaxCode), b.Price)
 		if err != nil {
-			return BillsSummary{}, errors.Wrap(err, "service/bill/summary/new")
+			return BillsSummary{}, NewErrorWrap(err, "service/bill/summary/new",
+				"Process bill data error.", http.StatusInternalServerError)
 		}
 
 		priceSubtotal += bill.Price()

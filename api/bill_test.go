@@ -30,8 +30,8 @@ func TestBillServiceGetBillsSumary(t *testing.T) {
 
 	mock.ExpectQuery(".+").WillReturnRows(rows)
 
-	summary, err := billService.GetBillsSummary(context.Background())
-	assert.NoError(t, err)
+	summary, apiErr := billService.GetBillsSummary(context.Background())
+	assert.Nil(t, apiErr)
 	assert.Equal(t, 2, len(summary.Bills))
 	assert.Equal(t, "15.55", summary.PriceSubtotal)
 	assert.Equal(t, "11.51", summary.TaxSubtotal)
