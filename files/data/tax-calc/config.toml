@@ -1,0 +1,9 @@
+[app]
+port = "8088"
+
+[database]
+username = "root"
+password = "root"
+host     = "localhost"
+port     = "5432"
+name     = "tax_calc"
